@@ -48,7 +48,7 @@ Prices are left blank on purpose: quote locally.
 | GNSS receiver (u-blox class) with antenna | 1 | Writer: GPS outdoors to the entrance door, anchor fix | needs a clear sky view; indoors use a surveyed anchor point instead |
 | Chassis, motors, drivers, encoders (robot width at most 0.4 m) | 2 | Writer, Executor | doors are 0.9 m |
 | Batteries, DC-DC converters, emergency stop switches | 2 sets | power and safety | |
-| Plywood 12 mm, 1.22 x 2.44 m | 9 | arena (8 + spare) | see `docs/proto_arena_materials.md` |
+| Plywood 12 mm, 1.22 x 2.44 m | 9 | arena (8 + spare) | see `PROTOTYPE_ARENA.md`; the wall list is written by `tools/make_proto_arena.py` |
 | Brackets, clamps, aluminium foil or metal mesh, foam blocks, cardboard boxes | - | arena, rubble, RF shield | |
 | Heat lamp with a metal guard; heated pads; kettle or humidifier | - | fire, victims, steam stand-ins | safety review first |
 | Gas stand-in compatible with the chosen sensor | - | gas event | keep away from the heat lamp; non-flammable if possible |

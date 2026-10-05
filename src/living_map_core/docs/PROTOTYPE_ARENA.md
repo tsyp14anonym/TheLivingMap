@@ -3,12 +3,10 @@
 Date: 2 Oct 2026. Environment chosen by the team: Fire / Hazardous Building. Final submission deadline (poster): 01/12/2026.
 
 ## 1. Recommendation in one paragraph
-Build **one small, modular arena of 7.2 x 4.8 m (6 x 4 modules of 1.2 m)** from 12 mm plywood strips, in the style of the **RoboCup Rescue "yellow arena"** (hallways and rooms, 1.2 m hallways, doorways wider than the robot). It is defined once in `tools/make_proto_arena.py`, which writes the **simulator map** (`maps/proto_arena.json`), the **Gazebo world** (`worlds/proto_arena.sdf`), the **printable plan** (`docs/proto_arena_plan.svg/png`) and the **material list** (`docs/proto_arena_materials.md`), so simulation and plywood cannot drift apart. Walls come to 37.5 m = **8 sheets** of 1.22 x 2.44 m plywood (9 with spare), each sheet cut lengthwise into two 0.61 m strips with no waste.
-
-![plan](proto_arena_plan.png)
+Build **one small, modular arena of 7.2 x 4.8 m (6 x 4 modules of 1.2 m)** from 12 mm plywood strips, in the style of the **RoboCup Rescue "yellow arena"** (hallways and rooms, 1.2 m hallways, doorways wider than the robot). It is defined once in `tools/make_proto_arena.py`, which writes the **simulator map** (`maps/proto_arena.json`), the **Gazebo world** (`worlds/proto_arena.sdf`), and, when it is run, a **printable plan** and a **material list** in `docs/`, so simulation and plywood cannot drift apart. Walls come to 37.5 m = **8 sheets** of 1.22 x 2.44 m plywood (9 with spare), each sheet cut lengthwise into two 0.61 m strips with no waste.
 
 ## 2. What the specification book requires, and how the prototype covers it
-Sources: the TSYP14 poster ("The Living Map") and the team sprint plan. Phase 2 (finals) asks for a **complete physical prototype (15 pts)**, pitching 5 min + 2 min Q&A, user manual (4), project architecture (5), GitHub (5).
+Source: the TSYP14 poster ("The Living Map"). Phase 2 (finals) asks for a **complete physical prototype (15 pts)**, pitching 5 min + 2 min Q&A, user manual (4), project architecture (5), GitHub (5).
 
 | Specification requirement | In the simulation | In the prototype (arena) |
 |---|---|---|
@@ -22,7 +20,7 @@ Sources: the TSYP14 poster ("The Living Map") and the team sprint plan. Phase 2 
 | Live map at the Command Post | Page on port 8080 | Same page on the laptop |
 | Priority 0 immediate relay vs 120 s batching | `uplink:=immediate / batched` | Demo both: P0 = heated victim next to the lamp |
 
-### The five failure cases of the sprint plan, as physical tests
+### The five failure cases, as physical tests
 | Failure case | Physical test in the arena |
 |---|---|
 | 1 Beacon destruction | Switch one beacon off after the drop: the neighbour's mirror frame and the missing heartbeat must flag it |
@@ -34,30 +32,30 @@ Sources: the TSYP14 poster ("The Living Map") and the team sprint plan. Phase 2 
 ## 3. Standards found (why this layout)
 * RoboCup Rescue / NIST: the **yellow arena is a maze of hallways and rooms for autonomous robots**; the 2007 overview gives a 10 x 15 m maze with 1.2 m hallways; the **orange arena** uses crossing ramps (15 degrees), the **red arena** stepfields. The 2026 rules set doorways to **robot width + 10 cm**, ramps 15/30 degrees, stairs 35/40/45 degrees.
 * RoboCupJunior Rescue Maze (small robots): 30 cm tiles, walls at least 15 cm high, ramps at most 25 degrees, levels 40 to 60 cm reached by ramps, **heated victims at least 10 C above ambient, over 16 cm2, about 7 cm above the floor**, robot height at most 30 cm.
-* NIST publishes an arena fabrication guide (RoboCupRescue Robot League Arena Fabrication Guide 2025B). It is a file of more than 30 MB that I could not open here: download it from the RoboCup rescue site and compare the maze panel details with this plan.
+* NIST publishes an arena fabrication guide (RoboCupRescue Robot League Arena Fabrication Guide 2025B). It is a file of more than 30 MB that was not reviewed for this document: download it from the RoboCup rescue site and compare the maze panel details with this plan.
 
 Choices that follow: hallway 1.2 m, doors 0.9 m (for a robot up to about 0.4 m wide), walls 0.61 m (a 2D LiDAR at 0.2 to 0.4 m height sees them, and the sheet is used with no waste), heated pads for victims.
 Optional second level (not in the map): a 40 to 60 cm platform reached by a ramp of 15 degrees or less would imitate "floor 1" for ground robots; the stairs/atrium logic for the drone is not needed with 2 ground robots.
 
-## 4. Findings that change your Phase 2 plan
+## 4. Findings that affect the Phase 2 plan
 ### 4.1 Gazebo worlds
-I found no maintained Gazebo Harmonic version of the RoboCup arenas; the RoboCup Rescue Simulation league still points to Gazebo 11 tutorials (ROS 2 Foxy). `map2sdf` (github.com/atinfinity/map2sdf) converts a nav2 occupancy-grid image into a gz sim world and is tested on Jazzy + Harmonic, a good alternative workflow. This project already has its own map -> SDF generator, which is what `worlds/proto_arena.sdf` uses.
+No maintained Gazebo Harmonic version of the RoboCup arenas was found; the RoboCup Rescue Simulation league still points to Gazebo 11 tutorials (ROS 2 Foxy). `map2sdf` (github.com/atinfinity/map2sdf) converts a nav2 occupancy-grid image into a gz sim world and is tested on Jazzy + Harmonic, a good alternative workflow. This project already has its own map -> SDF generator, which is what `worlds/proto_arena.sdf` uses.
 
-### 4.2 Radio through walls: your arena will not test the attenuation failure by itself
+### 4.2 Radio through walls: the arena will not test the attenuation failure by itself
 NIST 1997 measurements (as tabulated by Wi-Fi Vitae), loss at 2.4 GHz: plywood 6 mm about 1 dB; drywall about 1 dB; brick about 6 dB; concrete 102 mm about 15 dB; concrete 203 mm about 29 dB; reinforced concrete 203 mm about 31 dB. A plywood arena is nearly transparent, so the "RF attenuation" failure case needs an added shield (foil / metal mesh wall) and an RSSI measurement.
 
 ### 4.3 Bill of materials
-* **DWM1000 is end of life.** Qorvo announced EOL for the EVK1000 (DW1000) on 24 Mar 2021 (last-time buy 30 Sep 2021) and for the DWM1004C on 20 Apr 2022; replacements for new designs are DWM3000EVB / DWM3001CDK (DW3000). One distributor lists a DWM3000 sample part as end of life too, so check stock before ordering your 6 nodes.
-* UWB is for **ranging**, not for carrying your 32-byte message far. For the beacon message, LoRa is simpler. Sources list Tunisia under the EU433 plan (433.05 to 434.79 MHz) and EU863-870; these are third-party summaries, so **confirm with the Tunisian regulator** before transmitting.
-* LoRa airtime for the 32-byte frame (BW 125 kHz, CR 4/5, CRC on), computed by me: **SF7 72 ms** (500 packets per hour at a 1 % duty cycle), SF8 134 ms (269), SF9 247 ms (146), SF10 453 ms (80), SF12 1.81 s (20). In a 7 m arena SF7 is enough.
+* **DWM1000 is end of life.** Qorvo announced EOL for the EVK1000 (DW1000) on 24 Mar 2021 (last-time buy 30 Sep 2021) and for the DWM1004C on 20 Apr 2022; replacements for new designs are DWM3000EVB / DWM3001CDK (DW3000). One distributor lists a DWM3000 sample part as end of life too, so check stock before ordering the 6 nodes.
+* UWB is for **ranging**, not for carrying the 32-byte message far. For the beacon message, LoRa is simpler. Sources list Tunisia under the EU433 plan (433.05 to 434.79 MHz) and EU863-870; these are third-party summaries, so **confirm with the Tunisian regulator** before transmitting.
+* LoRa airtime for the 32-byte frame (BW 125 kHz, CR 4/5, CRC on), computed for this project: **SF7 72 ms** (500 packets per hour at a 1 % duty cycle), SF8 134 ms (269), SF9 247 ms (146), SF10 453 ms (80), SF12 1.81 s (20). In a 7 m arena SF7 is enough.
 * **MQ-4**: 200 to 10 000 ppm methane, preheat of at least 24 h (Hanwei) or 48 h (Winsen) for stable readings, and "small sensitivity to alcohol, smoke". So an alcohol-vapour stand-in will not make an MQ-4 react.
 
-### 4.4 Safe stand-ins (my engineering suggestions, not from a source: have the team review safety)
+### 4.4 Safe stand-ins (engineering suggestions, not from a source: review safety before building)
 * Fire: a heat lamp or ceramic heater behind a metal-mesh guard, surface near 140 C, never near flammable material, supervised. The thermal camera (Lepton) is the trigger.
 * Gas: keep it **away from the lamp** (it is in the opposite room) and **non-flammable**; match the stand-in to the sensor you will really use.
 * Victims: heated pads at least 10 C above ambient, 7 cm above the floor (RoboCupJunior rule). Steam: a kettle.
 
-## 5. What I verified in the simulation (and what I did not)
+## 5. What was verified in the simulation (and what was not)
 Arena map loaded in the project's own format; Gazebo SDF valid XML (147 models); the mission was run on 5 seeds:
 
 | seed | fire out | people rescued | beacons delivered | steam rejected | done at (sim s) |
@@ -89,7 +87,7 @@ bash ~/living_map_ws/src/living_map_core/scripts/run_clean.sh speed:=6 map:=$HOM
 ```
 Change the layout: edit `tools/make_proto_arena.py` (walls, doors, objects) and run `python3 tools/make_proto_arena.py .`, then `python3 -c "from living_map_core.gz_world import build_sdf; open('worlds/proto_arena.sdf','w').write(build_sdf('maps/proto_arena.json'))"`.
 
-## 7. Questions to ask the organisers (aess@ieee.tn or ras@ieee.tn, from the poster)
+## 7. Open questions for the organisers
 1. Is the physical prototype shown live in the pitch or by video? Is there an arena size or transport limit?
 2. Which radio bands and powers are allowed at the venue?
 3. May the Command Post and the Outside Network Area be laptops, and is a 4G link acceptable as the "wireless / satellite" link?
