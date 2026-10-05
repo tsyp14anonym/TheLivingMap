@@ -41,7 +41,6 @@ Data path: **Writer** (`agents.WriterAgent`) -> **beacon mesh** (`agents.Mesh`) 
 |---|---|
 | `.gitignore` | keeps build/, install/, log/ and caches out of git |
 | `CHANGELOG.md` | what changed between versions, including fixed measurement errors |
-| `LICENSE` | licence text (placeholder holder: change it) |
 | `README.md` | front page: what the project is, architecture diagram, how to run, results (generated), limits |
 | `REPOSITORY_GUIDE.md` | this file |
 | `TROUBLESHOOTING.md` | what to do when something does not start or an Executor stays idle |
@@ -50,8 +49,6 @@ Data path: **Writer** (`agents.WriterAgent`) -> **beacon mesh** (`agents.Mesh`) 
 | `src/living_map_core/docs/FAILURE_CASES.md` | five failure cases with measured results |
 | `src/living_map_core/docs/PHASE2_IMPLEMENTATION_PLAN.md` | timeline to Dec 1, bill of materials, physical test protocol, risks |
 | `src/living_map_core/docs/PROTOTYPE_ARENA.md` | the plywood arena, the specification check, research and sources |
-| `src/living_map_core/docs/SUBMISSION_CHECKLIST.md` | what is left to submit and where the documents disagree |
-| `src/living_map_core/docs/VIDEO_SCRIPT.md` | shot list and narration for the demo video |
 | `src/living_map_core/docs/diagrams/` | architecture, sequence, state machines, data flow, beacon frame (SVG + PNG), fig_priority, fig_results, fig_trace (PNG) |
 | `src/living_map_core/docs/proto_arena_materials.md` | wall length, plywood sheets and cut list for the arena |
 | `src/living_map_core/docs/proto_arena_plan.png` | the same plan as an image |
@@ -80,7 +77,7 @@ Data path: **Writer** (`agents.WriterAgent`) -> **beacon mesh** (`agents.Mesh`) 
 | `src/living_map_core/tools/make_map.py` | draws the 2-floor building and writes maps/complex.json |
 | `src/living_map_core/tools/make_proto_arena.py` | defines the prototype arena once and writes its map, SVG plan and material list |
 | `src/living_map_core/tools/make_repo_guide.py` | generates this guide |
-| `src/living_map_core/tools/refresh_final_docs.py` | regenerates README, FAILURE_CASES, VIDEO_SCRIPT and the arena table from docs/results_final.json |
+| `src/living_map_core/tools/refresh_final_docs.py` | regenerates README, FAILURE_CASES and the arena table from docs/results_final.json |
 | `src/living_map_core/worlds/complex_1floor.sdf` |  |
 | `src/living_map_core/worlds/living_map_fire.sdf` | Gazebo world generated from complex.json |
 | `src/living_map_core/worlds/proto_arena.sdf` | Gazebo world generated from proto_arena.json |
@@ -122,4 +119,4 @@ python3 src/living_map_core/tools/make_diagrams.py && python3 src/living_map_cor
 Pass `map:=<path>` to use another map (for example `maps/proto_arena.json` or `maps/complex_1floor.json`).
 
 ## 5. What is deliberately not in the repository
-`build/`, `install/`, `log/`, caches, the old downloaded zips, the challenge PDFs (organisers' material) and the old sprint-plan PDF (outdated). The earlier `legacy_antigravity/` prototype was removed because the current code replaces it and nothing imports it.
+`build/`, `install/`, `log/`, caches, the challenge PDFs (organisers' material) and outdated earlier drafts.

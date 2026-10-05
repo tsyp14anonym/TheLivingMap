@@ -44,7 +44,6 @@ Tests: `cd src/living_map_core && python3 -m pytest test/test_core.py -q`.
 | `src/living_map_core/docs/FAILURE_CASES.md` | five failure cases with measured results |
 | `src/living_map_core/docs/PHASE2_IMPLEMENTATION_PLAN.md` | timeline, bill of materials, physical test protocol |
 | `src/living_map_core/docs/PROTOTYPE_ARENA.md` | the plywood arena and the specification check |
-| `src/living_map_core/docs/VIDEO_SCRIPT.md`, `SUBMISSION_CHECKLIST.md` | demo video and submission |
 | `CHANGELOG.md` | what changed between versions, including fixed measurement errors |
 | `TROUBLESHOOTING.md` | when something does not start |
 

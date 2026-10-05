@@ -37,7 +37,7 @@
 * Robots "unreachable"/stuck: the map file must have walls closing every room; unknown space is crossable only near the beacon trail.
 * `map:=` changes the building and the Gazebo world is regenerated into /tmp/living_map/world.sdf.
 * Old processes: `pkill -f living_map; pkill -f "gz sim"; ros2 daemon stop` before relaunching.
-* Gazebo world was generated but never opened in real Gazebo by me: if a model misbehaves, run with `gazebo:=false` (the web pages and RViz still work) and tell me what you see.
+* The Gazebo world is generated from the map and has so far been validated only as XML (not yet checked in a real Gazebo session). If a model misbehaves, run with `gazebo:=false`; the web pages and RViz still work.
 
 ## "A CALLBACK CRASHED ... Logger severity cannot be changed between calls"
 Fixed in v4_8. If you still see it, you are running an older build: rebuild (`colcon build --symlink-install`) and check `grep -n "lg.warn" ~/living_map_ws/src/living_map_core/living_map_core/nodes.py` shows a hit.
@@ -46,4 +46,4 @@ Fixed in v4_8. If you still see it, you are running an older build: rebuild (`co
 An old run still holds the downlink port. Run `scripts/run_clean.sh` (it frees 8080, 8081, 9101 and 9102). Without the downlink the robots still work, but the Command Post cannot update an order while a robot is out (e.g. "hazard cleared" would only be seen by the robot's own sensors).
 
 ## An Executor walks into walls / wanders / never arrives (new navigation)
-`nav:=direct` assumes unknown space is free until the LiDAR says otherwise, so a robot may bump into a wall it could not see and replan. If you suspect the new method, run the old one for comparison: `... run_clean.sh speed:=6 nav:=trail` and tell me which robot and which beacon (`grep -E "target|unreachable|REACHED" ~/launch.log`).
+`nav:=direct` assumes unknown space is free until the LiDAR says otherwise, so a robot may bump into a wall it could not see and replan. If you suspect the new method, run the old one for comparison: `... run_clean.sh speed:=6 nav:=trail` and note which robot and which beacon is affected (`grep -E "target|unreachable|REACHED" ~/launch.log`).
