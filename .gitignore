@@ -1,0 +1,16 @@
+# ROS 2 / colcon build products
+build/
+install/
+log/
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+# editors and backups
+.vscode/
+.idea/
+*.bak
+# runtime files written by the system
+/tmp/
+*.log
