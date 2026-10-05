@@ -1,4 +1,4 @@
-c# Phase 2 implementation plan (6 Oct to 1 Dec 2026)
+# Phase 2 implementation plan (6 Oct to 1 Dec 2026)
 
 Final submission deadline (poster): **01/12/2026**. Phase 2 scoring (50 points): physical prototype 15, pitching + Q&A 8, quality of the solution 8, technologies used 5, project architecture 5, user manual 4, GitHub 5.
 
@@ -22,24 +22,24 @@ Final submission deadline (poster): **01/12/2026**. Phase 2 scoring (50 points):
 7. **Gazebo check.** The generated world has been validated only as XML.
 
 ## 3. Timeline
-| Week | Dates | Work | Lead |
-|---|---|---|---|
-| 1 | 6-12 Oct | decisions and orders (BOM below); ask the organisers the questions in section 7; confirm radio band | Team lead |
-| 2 | 13-19 Oct | Writer chassis, LiDAR, SLAM, motor control; start the MQ-4 preheat (24 h or more) | Systems |
-| 3 | 20-26 Oct | thermal + gas drivers; first detections on the bench; beacon firmware v1 | Systems / Simulation |
-| 4 | 27 Oct - 2 Nov | LoRa link beacon to van; gateway software; frame translation check against a phone GPS at the entrance | Systems |
-| 5 | 3-9 Nov | Executor robot, briefing, navigation; arena built and measured | Simulation |
-| 6 | 10-16 Nov | integration of the whole chain; the five failure cases as physical tests; RSSI measurements | all |
-| 7 | 17-23 Nov | user manual, GitHub clean-up, demo video of the prototype; pitch draft | Team lead |
-| 8 | 24 Nov - 1 Dec | rehearsals (5 min pitch + 2 min Q&A), spare parts, submission **before 1 Dec** | all |
+| Week | Dates | Work |
+|---|---|---|
+| 1 | 6-12 Oct | decisions and orders (BOM below); confirm radio band |
+| 2 | 13-19 Oct | Writer chassis, LiDAR, SLAM, motor control; start the MQ-4 preheat (24 h or more) |
+| 3 | 20-26 Oct | thermal + gas drivers; first detections on the bench; beacon firmware v1 |
+| 4 | 27 Oct - 2 Nov | LoRa link beacon to van; gateway software; frame translation check against a phone GPS at the entrance |
+| 5 | 3-9 Nov | Executor robot, briefing, navigation; arena built and measured |
+| 6 | 10-16 Nov | integration of the whole chain; the five failure cases as physical tests; RSSI measurements |
+| 7 | 17-23 Nov | user manual, GitHub clean-up, demo video of the prototype; pitch draft |
+| 8 | 24 Nov - 1 Dec | rehearsals (5 min pitch + 2 min Q&A), spare parts, submission **before 1 Dec** |
 
 ## 4. Bill of materials
 Prices are left blank on purpose: quote locally.
 
 | Item | Qty | Role | Notes |
 |---|---|---|---|
-| NVIDIA Jetson Orin Nano 8 GB | 2 | onboard SLAM, Nav2, vision | from the sprint plan; check stock and delivery time |
-| RPLIDAR A3 (or equivalent 2D LiDAR) | 2 | mapping, obstacle costmap | from the sprint plan; walls are 0.61 m high |
+| NVIDIA Jetson Orin Nano 8 GB | 2 | onboard SLAM, Nav2, vision | check stock and delivery time |
+| RPLIDAR A3 (or equivalent 2D LiDAR) | 2 | mapping, obstacle costmap | walls are 0.61 m high |
 | ESP32-S3 + LoRa module (433 or 868 MHz) | 6-8 | beacon nodes and the gateway radio | confirm the band with the regulator; 32 B at SF7 is 72 ms on air |
 | UWB: Qorvo DWM3001CDK (optional) | 2-4 | ranging only | **DWM1000 is end of life** (Qorvo PCN 21-0072); UWB does not replace the message link |
 | Thermal camera: FLIR Lepton 3.5 with breakout | 1 | victims, fire, steam rejection | cheaper alternative: lower-resolution thermal sensor |
@@ -55,7 +55,7 @@ Prices are left blank on purpose: quote locally.
 | Laptops | 2 | Command Post, van | existing |
 
 ## 5. Physical test protocol
-| # | Test | Pass criterion (to confirm with the team) | Scores |
+| # | Test | Pass criterion | Scores |
 |---|---|---|---|
 | T1 | Writer explores the arena autonomously | covers all rooms without collision in 2 of 3 runs | prototype |
 | T2 | detection of fire, gas, person, animal, debris | each event beaconed once; kettle rejected | prototype |
@@ -71,23 +71,10 @@ Prices are left blank on purpose: quote locally.
 ## 6. Risks
 | Risk | Effect | Mitigation |
 |---|---|---|
-| DWM1000 end of life | cannot buy the module in the sprint plan | LoRa for messages; DWM3001CDK only if ranging is needed |
+| DWM1000 end of life | the originally considered module cannot be bought | LoRa for messages; DWM3001CDK only if ranging is needed |
 | MQ-4 needs 24 to 48 h preheat | wasted bench time | power it from week 2 |
 | plywood is transparent to radio | the attenuation case would not show | foil or metal-mesh wall + RSSI measurement |
-| slow internet for downloads | delays | order and download early; use the apt resume feature |
 | heat lamp and gas in one room | fire hazard | separate rooms, guard, supervision, extinguisher at hand |
 | real robots are slower than the simulated ones | timing differs from the report | scale speeds in the map profile; report real numbers |
 | single Executor not supported yet | the Command Post would leave hazards unassigned | build the universal role in week 3 |
 | 8 weeks is short | scope creep | freeze the arena layout in week 5 |
-
-## 7. Questions to send to the organisers (aess@ieee.tn, ras@ieee.tn)
-1. Is the physical prototype shown live in the pitch or by video? Any arena size or transport limit?
-2. Which radio bands and powers are allowed at the venue?
-3. May the Command Post and the Outside Network Area be laptops, and is a 4G link acceptable as the "wireless / satellite" link?
-4. Is a single Executor enough, or is a team of Executors rewarded?
-5. How are the 45 points of Phase 1 distributed (the poster's lines add up to more)?
-
-## 8. User manual and pitch
-* **User manual (4 pts):** purpose and safety; parts list; assembling the arena; flashing the beacons; starting the van, the Command Post and the robots; the live map; running the five failure cases; troubleshooting (`TROUBLESHOOTING.md`).
-* **Pitch (5 min):** problem (30 s) -> idea (30 s) -> architecture and air-gap (60 s) -> live demo or video (90 s) -> results and failure cases (60 s) -> prototype and plan (30 s).
-* **Q&A preparation:** why egocentric hops; how the air-gap is proven; what if the Writer dies; what happens in thick concrete (the honest answer: the design fails, see `FAILURE_CASES.md`); why not `slam_toolbox` in the simulation; how aging works; why the van is the only relay.
