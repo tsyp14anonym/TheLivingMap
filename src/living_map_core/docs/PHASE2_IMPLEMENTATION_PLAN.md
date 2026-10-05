@@ -1,4 +1,4 @@
-# Phase 2 implementation plan (6 Oct to 1 Dec 2026)
+c# Phase 2 implementation plan (6 Oct to 1 Dec 2026)
 
 Final submission deadline (poster): **01/12/2026**. Phase 2 scoring (50 points): physical prototype 15, pitching + Q&A 8, quality of the solution 8, technologies used 5, project architecture 5, user manual 4, GitHub 5.
 
